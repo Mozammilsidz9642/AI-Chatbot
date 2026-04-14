@@ -4,8 +4,8 @@ const sendMessage = document.querySelector("#send-message");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
 const closeChatbot = document.querySelector("#close-chatbot");
 
-const API_URL = "https://ai-chatbot-1omu.onrender.com/chat";
-const HISTORY_API = "https://ai-chatbot-1omu.onrender.com/history";
+const API_URL = "https://ai-chatbot-iomu.onrender.com/chat";
+const HISTORY_API = "https://ai-chatbot-iomu.onrender.com/history";
 
 // 🤖 ROBOT SVG
 const BOT_AVATAR = `
