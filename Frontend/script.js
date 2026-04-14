@@ -4,8 +4,8 @@ const sendMessage = document.querySelector("#send-message");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
 const closeChatbot = document.querySelector("#close-chatbot");
 
-const API_URL = "http://localhost:3000/chat";
-const HISTORY_API = "http://localhost:3000/history";
+const API_URL = "https://ai-chatbot-1omu.onrender.com/chat";
+const HISTORY_API = "https://ai-chatbot-1omu.onrender.com/history";
 
 // 🤖 ROBOT SVG
 const BOT_AVATAR = `
@@ -21,7 +21,7 @@ const createMessageElement = (content, ...classes) => {
   return div;
 };
  
-// 🔥 LOAD HISTORY
+//  LOAD HISTORY
 const loadChatHistory = async () => {
   try {
     const res = await fetch(HISTORY_API);
@@ -53,7 +53,7 @@ const loadChatHistory = async () => {
   }
 };
 
-// 🔥 BOT RESPONSE
+//  BOT RESPONSE
 const generateBotResponse = async (incomingDiv, message) => {
   const msgEl = incomingDiv.querySelector(".message-text");
 
@@ -76,7 +76,7 @@ const generateBotResponse = async (incomingDiv, message) => {
   }
 };
 
-// 🔥 SEND MESSAGE
+//  SEND MESSAGE
 const handleOutgoingMessage = (e) => {
   e.preventDefault();
 
@@ -101,7 +101,7 @@ const handleOutgoingMessage = (e) => {
   generateBotResponse(incoming, userMessage);
 };
 
-// 🔥 NEW CHAT
+//  NEW CHAT
 const startNewChat = () => {
   chatBody.innerHTML = `
     <div class="message bot-message">
@@ -113,7 +113,7 @@ const startNewChat = () => {
   `;
 };
 
-// 🔥 DELETE ALL
+//  DELETE ALL
 const deleteAllChats = async () => {
   await fetch("http://localhost:3000/delete-all", {
     method: "DELETE"
