@@ -10,8 +10,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ MongoDB connect (DIRECT)
-mongoose.connect("mongodb://mozammilsidz:Mozammilsidz@ac-mot1qry-shard-00-00.jgfycht.mongodb.net:27017,ac-mot1qry-shard-00-01.jgfycht.mongodb.net:27017,ac-mot1qry-shard-00-02.jgfycht.mongodb.net:27017/?ssl=true&replicaSet=atlas-te163w-shard-0&authSource=admin&appName=Cluster0")
+// ✅ MongoDB connect
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected ✅"))
   .catch(err => console.log(err));
 
@@ -25,6 +25,11 @@ const chatSchema = new mongoose.Schema({
 const Chat = mongoose.model("Chat", chatSchema);
 
 const API_KEY = process.env.API_KEY;
+
+// 🔥 TEST ROUTE
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 
 // 🔥 CHAT API
 app.post("/chat", async (req, res) => {
@@ -50,11 +55,7 @@ app.post("/chat", async (req, res) => {
 
     const reply = data?.choices?.[0]?.message?.content || "No response";
 
-    // 💾 SAVE CHAT
-    await Chat.create({
-      userMessage,
-      botReply: reply
-    });
+    await Chat.create({ userMessage, botReply: reply });
 
     res.json({ reply });
 
@@ -70,22 +71,23 @@ app.get("/history", async (req, res) => {
     const chats = await Chat.find().sort({ createdAt: -1 }).limit(50);
     res.json(chats);
   } catch (error) {
-    console.log(error);
     res.json([]);
   }
 });
 
-// 🔥 DELETE ALL
+// 🔥 DELETE
 app.delete("/delete-all", async (req, res) => {
   try {
     await Chat.deleteMany({});
     res.json({ message: "All chats deleted" });
   } catch (error) {
-    console.log(error);
     res.json({ message: "Error deleting chats" });
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+// 🔥 PORT FIX
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
